@@ -40,3 +40,22 @@ pub fn draw_pure_function<T: RenderTarget>(func: Box<math::PureFunc>, canvas: &m
 
     canvas.draw_lines(&points[..])
 }
+
+pub fn draw_parametric_function<T: RenderTarget>(func: Box<math::ParametricFunc>, domain: math::FunctionDomain, time_step: f64, canvas: &mut Canvas<T>) -> Result<(), String> {
+    let mut points: Vec<Point> = Vec::new();
+
+    let t0 = domain.start_end(time_step).0;
+    println!("{}", domain.start_end(time_step).1 - domain.start_end(time_step).0);
+    for t in 0..domain.num_points(time_step) {
+        let t: f64 = t as f64*time_step + t0;
+        let (x, y) = func(t);
+        let x: i32 = x as i32;
+        let y: i32 = y as i32;
+        points.push(
+            Point::new(x, y)
+        )
+    }
+
+    canvas.draw_lines(&points[..])
+    
+}
