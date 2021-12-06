@@ -9,7 +9,7 @@ pub struct FunctionDomain(pub FunctionDomainType, pub FunctionDomainType);
 
 impl FunctionDomain {
     pub fn build_inclusive(lower: f64, upper: f64) -> Self {
-        Self(FunctionDomainType::Inclusive(lower), FunctionDomainType::Inclusive(lower))
+        Self(FunctionDomainType::Inclusive(lower), FunctionDomainType::Inclusive(upper))
     }
 
     pub fn start_end(&self, time_step: f64) -> (f64, f64) {
@@ -24,7 +24,6 @@ impl FunctionDomain {
         (t0, tf)
     }
     pub fn num_points(&self, time_step: f64) -> usize {
-        // TODO: fix how this works
         let (t0, tf) = self.start_end(time_step);
         ((tf-t0)/time_step) as usize
     }
