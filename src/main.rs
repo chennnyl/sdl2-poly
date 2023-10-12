@@ -20,20 +20,22 @@ fn main() {
 
     let mut secs_elapsed = 0.0;
 
+    let (lissajous, _) = util::math::lissajous(
+        canvas.viewport().width() as f64,
+        canvas.viewport().height() as f64,
+        11, 17
+    );
+
     'mainLoop: loop {
         canvas.set_draw_color(Color::BLACK);
         canvas.clear();
 
         canvas.set_draw_color(Color::GREEN);
 
-        let (lissajous, _) = util::math::lissajous(
-            canvas.viewport().width() as f64,
-            canvas.viewport().height() as f64,
-            11, 17
-        );
+        
         let domain = util::math::FunctionDomain::build_inclusive(secs_elapsed, secs_elapsed + 3.14);
 
-        draw::primitive::draw_parametric_function(lissajous, domain, 0.01, &mut canvas).ok();
+        draw::primitive::draw_parametric_function(&lissajous, domain, 0.01, &mut canvas).ok();
 
         for event in event_pump.poll_iter() {
             match event {
